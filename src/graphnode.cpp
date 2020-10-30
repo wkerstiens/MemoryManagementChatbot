@@ -11,7 +11,7 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
 
-    delete _chatBot; 
+    // delete _chatBot;  Task 0 --> this seems to be the second time the same object is deleted
 
     ////
     //// EOF STUDENT CODE
