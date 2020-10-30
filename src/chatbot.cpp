@@ -11,6 +11,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
+    std::cout << "ChatBot Constructor without memort allocation.\n";
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;
@@ -20,7 +21,7 @@ ChatBot::ChatBot()
 // constructor WITH memory allocation
 ChatBot::ChatBot(std::string filename)
 {
-    std::cout << "ChatBot Constructor" << std::endl;
+    std::cout << "ChatBot Constructor with memory allocation.\n";
     
     // invalidate data handles
     _chatLogic = nullptr;
@@ -44,6 +45,79 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+
+// copy constructor - don't want to change original
+ChatBot::ChatBot(const ChatBot &original)
+{
+    std::cout << "ChatBox copy constructor\n";
+    _image = new wxBitmap(*original._image); // avatar image
+
+    // data handles (not owned)
+    _currentNode = original._currentNode;
+    _rootNode = original._rootNode;
+    _chatLogic = original._chatLogic;
+}
+
+// copy assignment
+ChatBot &ChatBot::operator=(const ChatBot &original)
+{
+    std::cout << "ChatBox copy assignment\n";
+    if(this == &original) return *this;
+    if(_image != nullptr) delete _image;
+    _image = new wxBitmap(*original._image); // avatar image
+
+    // data handles (not owned)
+    _currentNode = original._currentNode;
+    _rootNode = original._rootNode;
+    _chatLogic = original._chatLogic;
+
+    return *this;
+}
+
+// move assingment
+ChatBot &ChatBot::operator=(ChatBot &&original)
+{
+    std::cout << "ChatBox move assignment\n";
+    if(this == &original) return *this;
+    if(_image != nullptr) delete _image;
+    _image = new wxBitmap(*original._image); // avatar image
+
+    // data handles (not owned)
+    _currentNode = original._currentNode;
+    _rootNode = original._rootNode;
+    _chatLogic = original._chatLogic;
+
+    original._image = NULL;
+    original._currentNode = nullptr;
+    original._rootNode = nullptr;
+    original._chatLogic = nullptr;
+
+    // todo: chatbot handle????
+    return *this;
+}
+
+// move constructor - make sure to destroy original
+ChatBot::ChatBot(ChatBot &&original)
+{
+    std::cout << "ChatBox move constructor\n";
+    std::cout << "ChatBox move assignment\n";
+    if(_image != nullptr) delete _image;
+    _image = new wxBitmap(*original._image); // avatar image
+
+    // data handles (not owned)
+    _currentNode = original._currentNode;
+    _rootNode = original._rootNode;
+    _chatLogic = original._chatLogic;
+
+    // todo: chatbot handle????
+
+    original._image = NULL;
+    original._currentNode = nullptr;
+    original._rootNode = nullptr;
+    original._chatLogic = nullptr;
+
+}
+
 
 ////
 //// EOF STUDENT CODE

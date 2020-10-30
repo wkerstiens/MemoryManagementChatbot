@@ -30,6 +30,19 @@ public:
     //// STUDENT CODE
     ////
 
+    // adding stuff for the rule of 5
+    // cpoy constructor - don't want to cahge original
+    ChatBot(const ChatBot &original);
+
+    // copy assignment
+    ChatBot &operator=(const ChatBot &orignal);
+
+    // move assingment
+    ChatBot &operator=(ChatBot &&original);
+
+    // move constructor - make sure to destroy original
+    ChatBot(ChatBot &&original);
+
     ////
     //// EOF STUDENT CODE
 
