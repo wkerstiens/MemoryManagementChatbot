@@ -11,7 +11,7 @@
 // constructor WITHOUT memory allocation
 ChatBot::ChatBot()
 {
-    std::cout << "ChatBot Constructor without memort allocation.\n";
+    std::cout << "ChatBot Constructor without memory allocation.\n";
     // invalidate data handles
     _image = nullptr;
     _chatLogic = nullptr;
@@ -50,10 +50,9 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &original)
 {
     std::cout << "ChatBox copy constructor\n";
-    _image = new wxBitmap(*original._image); // avatar image
+    _image = original._image; // avatar image
 
     // data handles (not owned)
-    _currentNode = original._currentNode;
     _rootNode = original._rootNode;
     _chatLogic = original._chatLogic;
 }
@@ -63,11 +62,10 @@ ChatBot &ChatBot::operator=(const ChatBot &original)
 {
     std::cout << "ChatBox copy assignment called\n";
     if(this == &original) return *this;
-    if(_image != nullptr) delete _image;
-    _image = new wxBitmap(*original._image); // avatar image
+    if(_image != NULL) delete _image;
+    _image = original._image; // avatar image
 
     // data handles (not owned)
-    _currentNode = original._currentNode;
     _rootNode = original._rootNode;
     _chatLogic = original._chatLogic;
 
@@ -79,20 +77,19 @@ ChatBot &ChatBot::operator=(ChatBot &&original)
 {
     std::cout << "ChatBox move assignment called\n";
     if(this == &original) return *this;
-    if(_image != nullptr) delete _image;
-    _image = new wxBitmap(*original._image); // avatar image
+    if(_image != NULL) delete _image;
+    _image = original._image; // avatar image
 
     // data handles (not owned)
-    _currentNode = original._currentNode;
     _rootNode = original._rootNode;
     _chatLogic = original._chatLogic;
+
+    _chatLogic->SetChatbotHandle(this);
 
     original._image = NULL;
     original._currentNode = nullptr;
     original._rootNode = nullptr;
     original._chatLogic = nullptr;
-
-    // todo: chatbot handle????
     return *this;
 }
 
@@ -100,19 +97,17 @@ ChatBot &ChatBot::operator=(ChatBot &&original)
 ChatBot::ChatBot(ChatBot &&original)
 {
     std::cout << "ChatBox move constructor\n";
-    std::cout << "ChatBox move assignment\n";
-    if(_image != nullptr) delete _image;
-    _image = new wxBitmap(*original._image); // avatar image
+
+    //if(_image != nullptr) delete _image;
+    _image = original._image; // avatar image
 
     // data handles (not owned)
-    _currentNode = original._currentNode;
     _rootNode = original._rootNode;
     _chatLogic = original._chatLogic;
 
-    // todo: chatbot handle????
+    _chatLogic->SetChatbotHandle(this);
 
     original._image = NULL;
-    original._currentNode = nullptr;
     original._rootNode = nullptr;
     original._chatLogic = nullptr;
 
