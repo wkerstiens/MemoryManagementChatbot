@@ -61,7 +61,7 @@ ChatBot::ChatBot(const ChatBot &original)
 // copy assignment
 ChatBot &ChatBot::operator=(const ChatBot &original)
 {
-    std::cout << "ChatBox copy assignment\n";
+    std::cout << "ChatBox copy assignment called\n";
     if(this == &original) return *this;
     if(_image != nullptr) delete _image;
     _image = new wxBitmap(*original._image); // avatar image
@@ -77,7 +77,7 @@ ChatBot &ChatBot::operator=(const ChatBot &original)
 // move assingment
 ChatBot &ChatBot::operator=(ChatBot &&original)
 {
-    std::cout << "ChatBox move assignment\n";
+    std::cout << "ChatBox move assignment called\n";
     if(this == &original) return *this;
     if(_image != nullptr) delete _image;
     _image = new wxBitmap(*original._image); // avatar image
